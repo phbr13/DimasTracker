@@ -149,8 +149,3 @@ DimasTracker/
 
   Se você é detentor de direitos e quer que algum material seja removido, [abra uma issue](https://github.com/phbr13/DimasTracker/issues/new/choose) e ele será retirado.
 - **Fórmulas:** renderizadas com [KaTeX](https://katex.org) (MIT).
-
-<div align="center">
-<br>
-<sub>Feito com 💚 por estudantes, para estudantes. Dimas GOAT.</sub>
-</div>
