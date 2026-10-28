@@ -29,6 +29,7 @@ O DimasTracker reúne, num lugar só, todos os exercícios cobrados nas **três 
 - 🙈 **Modo estudo**: esconde o gabarito até você pedir
 - 🌗 **Tema claro e escuro**
 - ↔️ **Seções redimensionáveis**, com limites para nada ficar apertado
+- 🪟 **Três disposições**: lado a lado, gabarito embaixo ou só o exercício
 - 💾 **Tudo salvo no navegador**: sem conta e sem servidor
 
 ## Funcionalidades
@@ -67,8 +68,27 @@ As páginas do PDF viram imagens vetoriais nítidas em qualquer zoom.
 - **Três provas** com 134 itens no total, cada um com o enunciado e o gabarito
 - **Progresso** total e da prova atual, em anéis no cabeçalho
 - **Modo estudo**: "Tente resolver antes de conferir"
+- **Anterior · Concluído · Próximo** numa barrinha sobre o exercício, para seguir a lista sem voltar a ela
 - **Tema claro** para estudar de dia, **escuro** para a madrugada antes da prova
-- Lembra o zoom, o tema, as larguras e o que você marcou
+- Lembra o zoom, o tema, a disposição, as larguras e o que você marcou
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### Do seu jeito
+
+No cabeçalho, escolha como ver o exercício e o gabarito:
+
+- **Lado a lado**, o padrão
+- **Gabarito embaixo**, para ler o enunciado com a largura toda
+- **Só o exercício**, escondendo o gabarito e deixando a tela para o PDF
+
+</td>
+<td width="50%">
+
+![Exercício em cima e gabarito embaixo, com a barrinha Anterior · Concluído · Próximo](docs/imagens/empilhado.png)
 
 </td>
 </tr>
@@ -83,6 +103,8 @@ As páginas do PDF viram imagens vetoriais nítidas em qualquer zoom.
 | Aproximar num ponto | Duplo clique na página |
 | Tela cheia do exercício | <kbd>F</kbd> (com o mouse sobre o exercício) |
 | Redimensionar seções | Arraste as linhas entre elas · duplo clique restaura |
+| Mudar a disposição | Botões ao lado do tema, no cabeçalho |
+| Ir para o item vizinho | Setas da barrinha embaixo do exercício |
 
 ## Como usar
 

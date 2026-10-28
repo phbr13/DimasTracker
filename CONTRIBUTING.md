@@ -56,7 +56,7 @@ npm run gabaritos                             # gera gabaritos/Prova 2/4.1.7.js
 - **Sem build e sem frameworks:** o site tem que continuar funcionando ao abrir o arquivo direto (`file://`) e no GitHub Pages.
 - **Código em português**, como o resto do projeto (`mostrarProva`, `.gabarito-area`).
 - **Cores só por variáveis CSS** (`--fundo`, `--texto`, …), definidas no topo do `style.css`, para os dois temas funcionarem.
-- **Teste nos temas claro e escuro** antes de enviar.
+- **Teste nos temas claro e escuro** e nas três disposições (lado a lado, empilhado e só o exercício) antes de enviar.
 
 ## Enviar
 

@@ -91,6 +91,25 @@ function atualizarProgresso() {
   atualizarBloco(blocoProva, feitosProva, provas[provaAtual].length, "Prova " + provaAtual);
 }
 
+// Marca/desmarca um item; usado pelo checkbox da lista e pelo botão "Concluído"
+function definirFeito(numero, texto, feito) {
+  const lst = marcados[numero];
+  const pos = lst.indexOf(texto);
+  if (feito && pos === -1) lst.push(texto);
+  if (!feito && pos !== -1) lst.splice(pos, 1);
+  salvar();
+
+  if (numero === provaAtual) {
+    lista.querySelectorAll(".item").forEach(function (el) {
+      if (el.dataset.texto !== texto) return;
+      el.classList.toggle("feito", feito);
+      el.querySelector(".check").checked = feito;
+    });
+  }
+  atualizarProgresso();
+  atualizarRodape();
+}
+
 // ---------- Item selecionado (por prova, só em memória) ----------
 const selecionados = { 1: null, 2: null, 3: null };
 
@@ -189,6 +208,44 @@ function mostrarPdf(prova, item) {
   atualizarIndicador();
 }
 
+// ---------- Rodapé: anterior / concluído / próximo ----------
+const visorRodape = document.getElementById("visor-rodape");
+const botaoAnterior = document.getElementById("item-anterior");
+const botaoProximo = document.getElementById("item-proximo");
+const botaoConcluido = document.getElementById("botao-concluido");
+
+function atualizarRodape() {
+  const item = selecionados[provaAtual];
+  visorRodape.hidden = !item;
+  if (!item) return;
+  const itens = provas[provaAtual];
+  const pos = itens.indexOf(item);
+  botaoAnterior.disabled = pos <= 0;
+  botaoProximo.disabled = pos === -1 || pos >= itens.length - 1;
+  const feito = marcados[provaAtual].includes(item);
+  botaoConcluido.setAttribute("aria-pressed", String(feito));
+  botaoConcluido.title = feito ? "Desmarcar este item" : "Marcar este item como concluído";
+}
+
+// Abre o item vizinho na lista (-1 = anterior, 1 = próximo)
+function irPara(passo) {
+  const itens = provas[provaAtual];
+  const destino = itens[itens.indexOf(selecionados[provaAtual]) + passo];
+  if (destino === undefined) return;
+  lista.querySelectorAll(".item").forEach(function (el) {
+    if (el.dataset.texto !== destino) return;
+    selecionarItem(el, destino);
+    el.scrollIntoView({ block: "nearest" });
+  });
+}
+
+botaoAnterior.addEventListener("click", function () { irPara(-1); });
+botaoProximo.addEventListener("click", function () { irPara(1); });
+botaoConcluido.addEventListener("click", function () {
+  const item = selecionados[provaAtual];
+  if (item) definirFeito(provaAtual, item, !marcados[provaAtual].includes(item));
+});
+
 // ---------- Zoom ----------
 // Mantém o ponto (x, y) da tela — em geral o cursor — parado durante o zoom.
 function aplicarZoom(novo, x, y) {
@@ -230,7 +287,9 @@ function zoomPaginaInteira() {
   const larg = visorArea.clientWidth - parseFloat(estilo.paddingLeft) - parseFloat(estilo.paddingRight);
   const alt = visorArea.clientHeight - parseFloat(estilo.paddingTop) - parseFloat(estilo.paddingBottom);
   const proporcao = img.naturalWidth / img.naturalHeight;
-  return Math.min(1, (alt * proporcao) / larg);
+  // largura das páginas em 100% (a da seção, mas com um máximo no CSS)
+  const base = Math.min(larg, folhas.getBoundingClientRect().width / zoom);
+  return Math.min(1, (alt * proporcao) / base);
 }
 
 document.getElementById("zoom-mais").addEventListener("click", function () { passoZoom(1); });
@@ -354,17 +413,29 @@ atualizarBotaoTema();
 // ---------- Seções redimensionáveis ----------
 // Larguras guardadas como fração da tela, com limites para nada ficar apertado.
 const conteudo = document.querySelector(".conteudo");
+const paineis = document.getElementById("paineis");
+const divisor2 = document.getElementById("divisor-2");
 const LARGURAS_PADRAO = { lista: 0.15, exercicio: 0.425 };
 const LIMITES = {
   listaMin: 150, listaMax: 0.3,      // px, fração da tela
-  colunaMin: 320, colunaMinFracao: 0.22
+  colunaMin: 320, colunaMinFracao: 0.22,
+  linhaMin: 140                      // px, altura mínima de cada seção empilhada
 };
+const ALTURA_EXERCICIO_PADRAO = 0.6; // empilhado: fração da altura para o exercício
 let larguras = Object.assign({}, LARGURAS_PADRAO);
+let alturaExercicio = ALTURA_EXERCICIO_PADRAO;
 
 try {
   const salvas = JSON.parse(localStorage.getItem("dimastracker:larguras"));
   if (salvas && salvas.lista && salvas.exercicio) larguras = salvas;
+  const salva = parseFloat(localStorage.getItem("dimastracker:alturaExercicio"));
+  if (salva) alturaExercicio = salva;
 } catch (e) { /* ignora */ }
+
+// exercício e gabarito lado a lado (com o gabarito visível)?
+function ladoALado() {
+  return !paineis.classList.contains("empilhado") && !paineis.classList.contains("sem-gabarito");
+}
 
 function aplicarLarguras() {
   const total = conteudo.clientWidth;
@@ -372,33 +443,60 @@ function aplicarLarguras() {
 
   let lista = Math.min(Math.max(larguras.lista * total, LIMITES.listaMin), total * LIMITES.listaMax);
   let exercicio = larguras.exercicio * total;
-  exercicio = Math.max(exercicio, minColuna);
-  exercicio = Math.min(exercicio, total - lista - minColuna);
+  if (ladoALado()) {
+    exercicio = Math.max(exercicio, minColuna);
+    exercicio = Math.min(exercicio, total - lista - minColuna);
+  }
 
   conteudo.style.setProperty("--largura-lista", lista + "px");
   conteudo.style.setProperty("--largura-exercicio", exercicio + "px");
   return { lista: lista, exercicio: exercicio, total: total };
 }
 
+function aplicarAlturaExercicio() {
+  const total = paineis.clientHeight;
+  const min = Math.min(LIMITES.linhaMin, total / 2);
+  const px = Math.min(Math.max(alturaExercicio * total, min), total - min);
+  paineis.style.setProperty("--altura-exercicio", px + "px");
+  return { px: px, total: total };
+}
+
 function salvarLarguras() {
-  try { localStorage.setItem("dimastracker:larguras", JSON.stringify(larguras)); } catch (e) { /* ignora */ }
+  try {
+    localStorage.setItem("dimastracker:larguras", JSON.stringify(larguras));
+    localStorage.setItem("dimastracker:alturaExercicio", String(alturaExercicio));
+  } catch (e) { /* ignora */ }
 }
 
 function prepararDivisor(divisor, qual) {
+  // o divisor entre exercício e gabarito fica deitado quando as seções estão empilhadas
+  function deitado() {
+    return qual === "exercicio" && paineis.classList.contains("empilhado");
+  }
+
   divisor.addEventListener("pointerdown", function (e) {
     if (e.button !== 0) return;
     e.preventDefault();
     divisor.setPointerCapture(e.pointerId);
+    const vertical = deitado();
     document.body.classList.add("redimensionando");
+    if (vertical) document.body.classList.add("vertical");
     const inicioX = e.clientX;
+    const inicioY = e.clientY;
     const atual = aplicarLarguras();
+    const atualAltura = aplicarAlturaExercicio();
 
     function mover(ev) {
+      if (vertical) {
+        alturaExercicio = (atualAltura.px + ev.clientY - inicioY) / atualAltura.total;
+        alturaExercicio = aplicarAlturaExercicio().px / atualAltura.total;
+        return;
+      }
       const dx = ev.clientX - inicioX;
       if (qual === "lista") {
-        // a lista cresce tirando espaço do exercício
         larguras.lista = (atual.lista + dx) / atual.total;
-        larguras.exercicio = (atual.exercicio - dx) / atual.total;
+        // lado a lado, a lista cresce tirando espaço do exercício
+        if (ladoALado()) larguras.exercicio = (atual.exercicio - dx) / atual.total;
       } else {
         larguras.exercicio = (atual.exercicio + dx) / atual.total;
       }
@@ -410,7 +508,7 @@ function prepararDivisor(divisor, qual) {
       divisor.removeEventListener("pointermove", mover);
       divisor.removeEventListener("pointerup", soltar);
       divisor.removeEventListener("pointercancel", soltar);
-      document.body.classList.remove("redimensionando");
+      document.body.classList.remove("redimensionando", "vertical");
       salvarLarguras();
     }
     divisor.addEventListener("pointermove", mover);
@@ -420,10 +518,21 @@ function prepararDivisor(divisor, qual) {
 
   // setas do teclado também redimensionam
   divisor.addEventListener("keydown", function (e) {
+    if (deitado()) {
+      if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+      e.preventDefault();
+      alturaExercicio += e.key === "ArrowUp" ? -0.03 : 0.03;
+      alturaExercicio = aplicarAlturaExercicio().px / paineis.clientHeight;
+      salvarLarguras();
+      return;
+    }
     if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
     e.preventDefault();
     const passo = e.key === "ArrowLeft" ? -0.02 : 0.02;
-    if (qual === "lista") { larguras.lista += passo; larguras.exercicio -= passo; }
+    if (qual === "lista") {
+      larguras.lista += passo;
+      if (ladoALado()) larguras.exercicio -= passo;
+    }
     else larguras.exercicio += passo;
     const r = aplicarLarguras();
     larguras.lista = r.lista / r.total;
@@ -432,11 +541,40 @@ function prepararDivisor(divisor, qual) {
   });
 
   divisor.addEventListener("dblclick", function () {
-    larguras = Object.assign({}, LARGURAS_PADRAO);
-    aplicarLarguras();
+    if (deitado()) {
+      alturaExercicio = ALTURA_EXERCICIO_PADRAO;
+      aplicarAlturaExercicio();
+    } else {
+      larguras = Object.assign({}, LARGURAS_PADRAO);
+      aplicarLarguras();
+    }
     salvarLarguras();
   });
 }
+
+// ---------- Disposição: lado a lado / empilhado / só o exercício ----------
+const botoesDisposicao = document.querySelectorAll("[data-disposicao]");
+
+function definirDisposicao(modo) {
+  const empilhado = modo === "empilhado";
+  paineis.classList.toggle("empilhado", empilhado);
+  paineis.classList.toggle("sem-gabarito", modo === "exercicio");
+
+  divisor2.classList.toggle("divisor-horizontal", empilhado);
+  divisor2.setAttribute("aria-orientation", empilhado ? "horizontal" : "vertical");
+
+  botoesDisposicao.forEach(function (b) {
+    b.setAttribute("aria-pressed", String(b.dataset.disposicao === modo));
+  });
+
+  aplicarLarguras();
+  aplicarAlturaExercicio();
+  try { localStorage.setItem("dimastracker:disposicao", modo); } catch (e) { /* ignora */ }
+}
+
+botoesDisposicao.forEach(function (b) {
+  b.addEventListener("click", function () { definirDisposicao(b.dataset.disposicao); });
+});
 
 // ---------- Altura do cabeçalho ----------
 // Ajuste pequeno: entre 12% e 19% da altura da tela (padrão 15%), nunca menos de 112 px.
@@ -457,6 +595,7 @@ function aplicarAlturaCabecalho() {
   const max = Math.max(LIMITES_CABECALHO.max * total, min);
   const px = Math.min(Math.max(alturaCabecalho * total, min), max);
   document.body.style.setProperty("--altura-cabecalho", px + "px");
+  aplicarAlturaExercicio();   // a área das seções empilhadas muda junto
   return px;
 }
 
@@ -506,9 +645,16 @@ window.addEventListener("resize", aplicarAlturaCabecalho);
 aplicarAlturaCabecalho();
 
 prepararDivisor(document.getElementById("divisor-1"), "lista");
-prepararDivisor(document.getElementById("divisor-2"), "exercicio");
-window.addEventListener("resize", aplicarLarguras);
-aplicarLarguras();
+prepararDivisor(divisor2, "exercicio");
+window.addEventListener("resize", function () {
+  aplicarLarguras();
+  aplicarAlturaExercicio();
+});
+
+let disposicaoSalva = "lado";
+try { disposicaoSalva = localStorage.getItem("dimastracker:disposicao") || "lado"; } catch (e) { /* ignora */ }
+if (!["lado", "empilhado", "exercicio"].includes(disposicaoSalva)) disposicaoSalva = "lado";
+definirDisposicao(disposicaoSalva);
 
 // ---------- Seção 3: gabarito ----------
 // Cada gabarito é um .js que chama registrarGabarito(...). Carregar via <script>
@@ -594,6 +740,7 @@ function mostrarConteudo() {
   revelado = false;
   mostrarPdf(provaAtual, item);
   desenharGabarito();
+  atualizarRodape();
 }
 
 // Modo estudo (lembrado no navegador)
@@ -642,6 +789,7 @@ function mostrarProva(numero) {
     // Linha do item: clicar aqui SELECIONA o item
     const item = document.createElement("div");
     item.className = "item";
+    item.dataset.texto = texto;
     item.tabIndex = 0;
     item.setAttribute("role", "button");
 
@@ -662,13 +810,7 @@ function mostrarProva(numero) {
     });
 
     check.addEventListener("change", function () {
-      const lst = marcados[numero];
-      const pos = lst.indexOf(texto);
-      if (check.checked && pos === -1) lst.push(texto);
-      if (!check.checked && pos !== -1) lst.splice(pos, 1);
-      item.classList.toggle("feito", check.checked);
-      salvar();
-      atualizarProgresso();
+      definirFeito(numero, texto, check.checked);
     });
 
     const span = document.createElement("span");

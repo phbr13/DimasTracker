@@ -106,6 +106,40 @@ body {
   min-width: 0;
 }
 
+/* Exercício + gabarito: lado a lado (padrão) ou empilhados (botão no cabeçalho) */
+.paineis {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.paineis.empilhado {
+  flex-direction: column;
+}
+
+.paineis.empilhado .secao-2 {
+  width: auto;
+  height: var(--altura-exercicio, 60%);
+}
+
+.paineis.empilhado .secao-3 {
+  min-height: 0;
+}
+
+/* sem gabarito: o exercício ocupa todo o espaço */
+.paineis.sem-gabarito .secao-3,
+.paineis.sem-gabarito #divisor-2 {
+  display: none;
+}
+
+.paineis.sem-gabarito .secao-2 {
+  flex: 1;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+}
+
 /* ---------- Divisores redimensionáveis ---------- */
 .divisor {
   flex: none;
@@ -384,6 +418,19 @@ h2 {
   gap: 2rem;
 }
 
+/* disposição das seções + tema, lado a lado e na mesma altura */
+.ferramentas {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.grupo-disposicao .botao-icone {
+  min-width: 2.1rem;
+  height: calc(2.3rem - 4px);   /* com a borda e o respiro do grupo, igual ao botão de tema */
+}
+.grupo-disposicao svg { width: 16px; height: 16px; }
+
 /* link para o guia de contribuição */
 .link-contribuir {
   font-size: 0.85rem;
@@ -572,7 +619,7 @@ h2 {
   overflow: auto;
   outline: none;
   cursor: grab;
-  padding: 1.25rem 1.5rem 2rem;
+  padding: 1.25rem 1.5rem 4.5rem;   /* embaixo, espaço para a barrinha de navegação */
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
@@ -589,9 +636,9 @@ h2 {
 
 .visor-area:has(> .visor-pdf) { padding: 0; }
 
-/* 100% = páginas ocupam a largura da seção */
+/* 100% = páginas ocupam a largura da seção, até um máximo confortável de leitura */
 .folhas {
-  width: calc(var(--zoom) * 100%);
+  width: calc(var(--zoom) * min(100%, 56rem));
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -635,9 +682,58 @@ h2 {
   filter: invert(0.86) hue-rotate(180deg);
 }
 
+/* ---------- Barrinha flutuante: anterior / concluído / próximo ---------- */
+.secao-2 { position: relative; }
+
+.navegacao {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  background: var(--superficie);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.navegacao[hidden] { display: none; }
+
+.navegacao .botao-icone {
+  height: 2rem;
+  min-width: 2rem;
+}
+
+.navegacao .botao-icone:disabled {
+  opacity: 0.35;
+  cursor: default;
+  background: transparent;
+  color: var(--texto-suave);
+}
+
+.botao-concluido {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.8rem;
+  font-size: 0.83rem;
+}
+.botao-concluido svg { opacity: 0.45; }
+.botao-concluido[aria-pressed="true"],
+.botao-concluido[aria-pressed="true"]:hover {
+  background: var(--destaque-fundo);
+  color: var(--destaque);
+}
+.botao-concluido[aria-pressed="true"] svg { opacity: 1; stroke-width: 2; }
+
 /* tela cheia: só o exercício, ocupando tudo */
 .secao-2:fullscreen {
   width: 100%;
+  height: 100%;
   background: var(--fundo);
 }
 

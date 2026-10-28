@@ -69,12 +69,27 @@
         </div>
       </div>
 
-      <a class="link-contribuir" href="contribuir.html">Como contribuir?</a>
+      <div class="ferramentas">
+        <!-- disposição do exercício e do gabarito: uma opção ativa por vez -->
+        <div class="grupo grupo-disposicao" role="group" aria-label="Disposição das seções">
+          <button type="button" class="botao-icone" data-disposicao="lado" aria-pressed="true" title="Exercício e gabarito lado a lado" aria-label="Exercício e gabarito lado a lado">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10"/><path d="M8 3v10"/></svg>
+          </button>
+          <button type="button" class="botao-icone" data-disposicao="empilhado" aria-pressed="false" title="Gabarito embaixo do exercício" aria-label="Gabarito embaixo do exercício">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10"/><path d="M2 8h12"/></svg>
+          </button>
+          <button type="button" class="botao-icone" data-disposicao="exercicio" aria-pressed="false" title="Só o exercício (esconde o gabarito)" aria-label="Só o exercício">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="3" width="12" height="10"/></svg>
+          </button>
+        </div>
 
-      <button type="button" class="botao-icone botao-tema" id="botao-tema" title="Mudar para o tema claro" aria-label="Mudar para o tema claro">
-        <svg class="icone-lua" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg>
-        <svg class="icone-sol" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.8"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
-      </button>
+        <button type="button" class="botao-icone botao-tema" id="botao-tema" title="Mudar para o tema claro" aria-label="Mudar para o tema claro">
+          <svg class="icone-lua" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg>
+          <svg class="icone-sol" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.8"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
+        </button>
+      </div>
+
+      <a class="link-contribuir" href="contribuir.html">Como contribuir?</a>
     </div>
   </header>
 
@@ -90,61 +105,76 @@
     <div class="divisor" id="divisor-1" role="separator" aria-orientation="vertical"
          aria-label="Redimensionar lista" tabindex="0" title="Arraste para redimensionar (duplo clique restaura)"></div>
 
-    <section class="secao secao-2" id="secao-exercicio" aria-label="Exercício">
-      <div class="visor-topo">
-        <h2 id="titulo-exercicio">Exercício</h2>
-        <div class="visor-controles" id="visor-controles" hidden>
-          <span class="indicador-pagina" id="indicador-pagina" hidden></span>
-          <div class="grupo" role="group" aria-label="Zoom">
-            <button type="button" class="botao-icone" id="zoom-menos" title="Diminuir zoom (Ctrl −)" aria-label="Diminuir zoom">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg>
-            </button>
-            <button type="button" class="botao-icone zoom-valor" id="zoom-valor" title="Voltar para 100% (Ctrl 0)">100%</button>
-            <button type="button" class="botao-icone" id="zoom-mais" title="Aumentar zoom (Ctrl +)" aria-label="Aumentar zoom">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg>
-            </button>
-          </div>
-          <div class="grupo" role="group" aria-label="Ajuste">
-            <button type="button" class="botao-icone" id="ajustar-largura" title="Ajustar à largura" aria-label="Ajustar à largura">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M4.5 5.5 2 8l2.5 2.5M11.5 5.5 14 8l-2.5 2.5"/></svg>
-            </button>
-            <button type="button" class="botao-icone" id="ajustar-pagina" title="Página inteira" aria-label="Página inteira">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="2" width="8" height="12" rx="1"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5"/></svg>
-            </button>
-          </div>
-          <div class="grupo" role="group" aria-label="Exibição">
-            <button type="button" class="botao-icone" id="paginas-escuras" aria-pressed="false" title="Páginas escuras" aria-label="Páginas escuras">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg>
-            </button>
-            <button type="button" class="botao-icone" id="tela-cheia" title="Tela cheia (F)" aria-label="Tela cheia">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg>
-            </button>
-            <a id="abrir-pdf" class="botao-icone" target="_blank" rel="noopener" title="Abrir o PDF original em outra aba" aria-label="Abrir PDF original">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2.5h4.5V7M13.5 2.5 7.5 8.5M11.5 9.5v3a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3"/></svg>
-            </a>
+    <div class="paineis" id="paineis">
+      <section class="secao secao-2" id="secao-exercicio" aria-label="Exercício">
+        <div class="visor-topo">
+          <h2 id="titulo-exercicio">Exercício</h2>
+          <div class="visor-controles" id="visor-controles" hidden>
+            <span class="indicador-pagina" id="indicador-pagina" hidden></span>
+            <div class="grupo" role="group" aria-label="Zoom">
+              <button type="button" class="botao-icone" id="zoom-menos" title="Diminuir zoom (Ctrl −)" aria-label="Diminuir zoom">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg>
+              </button>
+              <button type="button" class="botao-icone zoom-valor" id="zoom-valor" title="Voltar para 100% (Ctrl 0)">100%</button>
+              <button type="button" class="botao-icone" id="zoom-mais" title="Aumentar zoom (Ctrl +)" aria-label="Aumentar zoom">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg>
+              </button>
+            </div>
+            <div class="grupo" role="group" aria-label="Ajuste">
+              <button type="button" class="botao-icone" id="ajustar-largura" title="Ajustar à largura" aria-label="Ajustar à largura">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M4.5 5.5 2 8l2.5 2.5M11.5 5.5 14 8l-2.5 2.5"/></svg>
+              </button>
+              <button type="button" class="botao-icone" id="ajustar-pagina" title="Página inteira" aria-label="Página inteira">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="2" width="8" height="12" rx="1"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5"/></svg>
+              </button>
+            </div>
+            <div class="grupo" role="group" aria-label="Exibição">
+              <button type="button" class="botao-icone" id="paginas-escuras" aria-pressed="false" title="Páginas escuras" aria-label="Páginas escuras">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg>
+              </button>
+              <button type="button" class="botao-icone" id="tela-cheia" title="Tela cheia (F)" aria-label="Tela cheia">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg>
+              </button>
+              <a id="abrir-pdf" class="botao-icone" target="_blank" rel="noopener" title="Abrir o PDF original em outra aba" aria-label="Abrir PDF original">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2.5h4.5V7M13.5 2.5 7.5 8.5M11.5 9.5v3a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3"/></svg>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <div id="visor-area" class="visor-area" tabindex="-1">
-        <p class="painel-vazio">Selecione um item da lista para ver o exercício.</p>
-      </div>
-    </section>
+        <div id="visor-area" class="visor-area" tabindex="-1">
+          <p class="painel-vazio">Selecione um item da lista para ver o exercício.</p>
+        </div>
+        <!-- barrinha flutuante sobre o PDF: anterior / concluído / próximo -->
+        <div class="navegacao" id="visor-rodape" role="group" aria-label="Navegação entre itens" hidden>
+          <button type="button" class="botao-icone" id="item-anterior" title="Item anterior" aria-label="Item anterior">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg>
+          </button>
+          <button type="button" class="botao-icone botao-concluido" id="botao-concluido" aria-pressed="false" title="Marcar este item como concluído">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.3l3 3 6-6.5"/></svg>
+            <span>Concluído</span>
+          </button>
+          <button type="button" class="botao-icone" id="item-proximo" title="Próximo item" aria-label="Próximo item">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg>
+          </button>
+        </div>
+      </section>
 
-    <div class="divisor" id="divisor-2" role="separator" aria-orientation="vertical"
-         aria-label="Redimensionar exercício e gabarito" tabindex="0" title="Arraste para redimensionar (duplo clique restaura)"></div>
+      <div class="divisor" id="divisor-2" role="separator" aria-orientation="vertical"
+           aria-label="Redimensionar exercício e gabarito" tabindex="0" title="Arraste para redimensionar (duplo clique restaura)"></div>
 
-    <section class="secao secao-3" aria-label="Gabarito">
-      <div class="gabarito-topo">
-        <h2 id="titulo-gabarito">Gabarito</h2>
-        <label class="modo-estudo" title="Esconde o gabarito até você clicar em Mostrar">
-          <input type="checkbox" id="modo-estudo" class="check">
-          <span>Esconder até eu pedir</span>
-        </label>
-      </div>
-      <div id="gabarito-area" class="gabarito-area">
-        <p class="painel-vazio">Selecione um item da lista para ver o gabarito.</p>
-      </div>
-    </section>
+      <section class="secao secao-3" aria-label="Gabarito">
+        <div class="gabarito-topo">
+          <h2 id="titulo-gabarito">Gabarito</h2>
+          <label class="modo-estudo" title="Esconde o gabarito até você clicar em Mostrar">
+            <input type="checkbox" id="modo-estudo" class="check">
+            <span>Esconder até eu pedir</span>
+          </label>
+        </div>
+        <div id="gabarito-area" class="gabarito-area">
+          <p class="painel-vazio">Selecione um item da lista para ver o gabarito.</p>
+        </div>
+      </section>
+    </div>
   </main>
 
   <script src="paginas/indice.js"></script>
