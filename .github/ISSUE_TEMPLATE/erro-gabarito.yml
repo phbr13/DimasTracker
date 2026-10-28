@@ -1,0 +1,51 @@
+name: 🐛 Erro em gabarito ou exercício
+description: Conta errada, enunciado trocado, PDF que não abre…
+title: "[Erro] Prova X · item"
+labels: ["erro"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por avisar! 💚 Quanto mais detalhes, mais rápido corrigimos.
+  - type: dropdown
+    id: prova
+    attributes:
+      label: Prova
+      options:
+        - Prova 1
+        - Prova 2
+        - Prova 3
+    validations:
+      required: true
+  - type: input
+    id: item
+    attributes:
+      label: Item
+      description: O texto do item na lista
+      placeholder: "4.1.7"
+    validations:
+      required: true
+  - type: dropdown
+    id: onde
+    attributes:
+      label: Onde está o problema?
+      options:
+        - No gabarito (resolução ou resposta)
+        - No enunciado (PDF)
+        - Gabarito não aparece / não existe
+        - Outro
+    validations:
+      required: true
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que está errado?
+      description: Pode usar LaTeX entre cifrões, ex.: $x = 11$
+      placeholder: "No item (b), o determinante deveria ser -3, não 3, porque..."
+    validations:
+      required: true
+  - type: textarea
+    id: correcao
+    attributes:
+      label: Qual seria o certo? (opcional)
+      description: Se souber a resposta ou a correção, ajuda muito!

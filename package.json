@@ -1,0 +1,14 @@
+{
+  "name": "dimastracker",
+  "private": true,
+  "description": "Acompanhe a lista de exercícios das provas, com enunciado e gabarito lado a lado.",
+  "type": "module",
+  "scripts": {
+    "gabaritos": "node ferramentas/gerar-gabaritos.mjs",
+    "servir": "npx --yes serve@14.2.4 ."
+  },
+  "devDependencies": {
+    "katex": "0.16.11",
+    "marked": "15.0.12"
+  }
+}

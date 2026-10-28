@@ -1,0 +1,23 @@
+name: 💡 Sugestão
+description: Ideia de recurso, melhoria no visual ou exercício que falta
+title: "[Sugestão] "
+labels: ["sugestão"]
+body:
+  - type: textarea
+    id: ideia
+    attributes:
+      label: Qual é a ideia?
+      placeholder: "Seria legal se desse para filtrar só os itens que ainda não fiz..."
+    validations:
+      required: true
+  - type: textarea
+    id: motivo
+    attributes:
+      label: Por que ajudaria?
+      description: Que problema isso resolve no seu estudo?
+  - type: checkboxes
+    id: ajuda
+    attributes:
+      label: Quer ajudar a fazer?
+      options:
+        - label: Posso tentar implementar e abrir um Pull Request

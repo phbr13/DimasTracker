@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Como contribuir · DimasTracker</title>
+  <meta name="description" content="Guia para contribuir com o DimasTracker: reportar erros, escrever gabaritos, adicionar exercícios e melhorar o site.">
+  <link rel="icon" type="image/png" sizes="32x32" href="icones/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icones/icone-192.png">
+  <link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
+  <script>
+    // aplica o tema salvo antes de desenhar a página (evita piscar)
+    try {
+      if (localStorage.getItem("dimastracker:tema") === "claro") {
+        document.documentElement.dataset.tema = "claro";
+      }
+    } catch (e) { /* ignora */ }
+  </script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="contribuir.css">
+</head>
+<body class="pagina-guia">
+
+  <header class="guia-topo">
+    <a class="guia-voltar" href="./">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg>
+      Voltar ao DimasTracker
+    </a>
+    <div class="guia-topo-direita">
+      <a class="guia-github" href="https://github.com/phbr13/DimasTracker" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" aria-hidden="true" class="cheio"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span>GitHub</span>
+      </a>
+      <button type="button" class="botao-icone botao-tema" id="botao-tema" title="Mudar para o tema claro" aria-label="Mudar para o tema claro">
+        <svg class="icone-lua" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg>
+        <svg class="icone-sol" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.8"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="guia">
+    <nav class="guia-indice" aria-label="Nesta página">
+      <p class="guia-indice-titulo">Nesta página</p>
+      <ol>
+        <li><a href="#jeitos">Jeitos de ajudar</a></li>
+        <li><a href="#erro">Reportar um erro</a></li>
+        <li><a href="#preparar">Preparar o ambiente</a></li>
+        <li><a href="#gabarito">Escrever um gabarito</a></li>
+        <li><a href="#exercicio">Adicionar um exercício</a></li>
+        <li><a href="#site">Melhorar o site</a></li>
+        <li><a href="#enviar">Enviar a contribuição</a></li>
+        <li><a href="#estrutura">Mapa das pastas</a></li>
+      </ol>
+    </nav>
+
+    <main class="guia-conteudo">
+      <div class="guia-capa">
+        <img src="icones/icone-192.png" alt="" width="88" height="88">
+        <div>
+          <p class="guia-sobretitulo">Guia de contribuição</p>
+          <h1>Como contribuir?</h1>
+          <p class="guia-lead">
+            O DimasTracker é feito por estudantes, para estudantes. Achou um gabarito errado,
+            resolveu um exercício que ainda não tem solução ou teve uma ideia para o site?
+            Toda ajuda conta — e você <strong>não precisa saber programar</strong> para várias delas.
+          </p>
+        </div>
+      </div>
+
+      <!-- 1 -->
+      <section id="jeitos">
+        <h2><span class="num">1</span> Jeitos de ajudar</h2>
+        <div class="cartoes">
+          <a class="cartao" href="#erro">
+            <span class="cartao-icone">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>
+            </span>
+            <strong>Reportar um erro</strong>
+            <span>Conta errada, enunciado trocado, PDF que não abre. Leva 2 minutos.</span>
+            <em class="nivel facil">Sem programação</em>
+          </a>
+          <a class="cartao" href="#gabarito">
+            <span class="cartao-icone">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>
+            </span>
+            <strong>Escrever um gabarito</strong>
+            <span>Resolva em Markdown com fórmulas em LaTeX; a ferramenta faz o resto.</span>
+            <em class="nivel medio">Markdown + LaTeX</em>
+          </a>
+          <a class="cartao" href="#exercicio">
+            <span class="cartao-icone">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 14h6M13 11v6"/></svg>
+            </span>
+            <strong>Adicionar um exercício</strong>
+            <span>Um item novo na lista, com o PDF do enunciado.</span>
+            <em class="nivel medio">Um pouco de terminal</em>
+          </a>
+          <a class="cartao" href="#site">
+            <span class="cartao-icone">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 8 4.5 12l4 4M15.5 8l4 4-4 4M13.5 5.5l-3 13"/></svg>
+            </span>
+            <strong>Melhorar o site</strong>
+            <span>Novos recursos, correções de bugs, acessibilidade, visual.</span>
+            <em class="nivel dificil">HTML, CSS e JS</em>
+          </a>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section id="erro">
+        <h2><span class="num">2</span> Reportar um erro</h2>
+        <p>
+          O jeito mais rápido de ajudar. Você só precisa de uma conta (gratuita) no GitHub.
+        </p>
+        <ol class="passos">
+          <li>
+            <strong>Abra uma <em>issue</em></strong> — é como um “chamado” no GitHub.
+            <a class="botao-link" href="https://github.com/phbr13/DimasTracker/issues/new/choose" target="_blank" rel="noopener">Abrir uma issue ↗</a>
+          </li>
+          <li><strong>Escolha o modelo</strong> “Erro em gabarito” ou “Sugestão”.</li>
+          <li>
+            <strong>Diga onde está o problema:</strong> a prova, o item (ex.: <code>Prova 2 · 4.1.7</code>)
+            e o que está errado. Se souber a resposta certa, melhor ainda!
+          </li>
+        </ol>
+        <div class="dica">
+          <strong>Dica:</strong> antes de abrir, dê uma olhada nas
+          <a href="https://github.com/phbr13/DimasTracker/issues" target="_blank" rel="noopener">issues abertas</a> —
+          talvez alguém já tenha relatado o mesmo problema. Nesse caso, deixe um 👍 nela.
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section id="preparar">
+        <h2><span class="num">3</span> Preparar o ambiente</h2>
+        <p>Para mexer nos arquivos, você vai precisar de:</p>
+        <ul class="requisitos">
+          <li><strong>Git</strong> e uma conta no GitHub — <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">baixar o Git</a></li>
+          <li><strong>Node.js</strong> (versão 18 ou mais nova) — só para gerar gabaritos · <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a></li>
+          <li><strong>Python 3</strong> — só para adicionar PDFs de exercícios · <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">python.org</a></li>
+        </ul>
+
+        <ol class="passos">
+          <li>
+            <strong>Faça um <em>fork</em></strong>: no
+            <a href="https://github.com/phbr13/DimasTracker" target="_blank" rel="noopener">repositório</a>,
+            clique em <kbd>Fork</kbd>. Isso cria uma cópia do projeto na sua conta.
+          </li>
+          <li>
+            <strong>Baixe a sua cópia</strong> (troque <code>SEU-USUARIO</code> pelo seu usuário):
+            <pre><code>git clone https://github.com/SEU-USUARIO/DimasTracker.git
+cd DimasTracker</code></pre>
+          </li>
+          <li>
+            <strong>Crie um <em>branch</em></strong> para a sua mudança:
+            <pre><code>git checkout -b gabarito-4.1.7</code></pre>
+          </li>
+          <li>
+            <strong>Abra o site</strong>: é só dar dois cliques no <code>index.html</code>. Não tem build,
+            não tem servidor — é HTML, CSS e JavaScript puros. Se preferir um servidor local:
+            <pre><code>npm run servir</code></pre>
+          </li>
+        </ol>
+      </section>
+
+      <!-- 4 -->
+      <section id="gabarito">
+        <h2><span class="num">4</span> Escrever um gabarito</h2>
+        <p>
+          Os gabaritos são escritos em <strong>Markdown</strong> com fórmulas em <strong>LaTeX</strong> e depois
+          convertidos para o formato que o site carrega. Você escreve texto normal; as contas ficam entre cifrões.
+        </p>
+
+        <ol class="passos">
+          <li>
+            <strong>Instale as dependências</strong> (só na primeira vez):
+            <pre><code>npm install</code></pre>
+          </li>
+          <li>
+            <strong>Copie o modelo</strong> <code>fontes/MODELO.md</code> para
+            <code>fontes/Prova N/&lt;item&gt;.md</code>. O nome do arquivo precisa ser
+            <em>exatamente</em> o texto do item na lista — por exemplo
+            <code>fontes/Prova 1/1.1.10 (a,c).md</code>.
+          </li>
+          <li>
+            <strong>Escreva a solução.</strong> Um exemplo curto:
+            <pre class="exemplo-md"><code># Exercício 1.1.1 — Gabarito
+
+**Enunciado.** Calcule $AB - BA$ para as matrizes dadas.
+
+## (a) $AB - BA$
+
+$$
+AB - BA = \begin{bmatrix} -24 &amp; -20 \\ 58 &amp; 24 \end{bmatrix}
+$$
+
+&gt; **Resposta:** $AB \neq BA$, o produto não é comutativo.</code></pre>
+          </li>
+          <li>
+            <strong>Gere o gabarito</strong>:
+            <pre><code>npm run gabaritos</code></pre>
+            Isso cria <code>gabaritos/Prova N/&lt;item&gt;.js</code>. Se alguma fórmula tiver erro de LaTeX,
+            a ferramenta avisa qual é.
+          </li>
+          <li><strong>Confira no site</strong>: recarregue o <code>index.html</code> e clique no item.</li>
+        </ol>
+
+        <div class="tabela-rapida">
+          <div><span>Fórmula no meio do texto</span><code>$x^2 + y^2 = 1$</code></div>
+          <div><span>Fórmula em destaque</span><code>$$ \det(A) = ad - bc $$</code></div>
+          <div><span>Matriz</span><code>\begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix}</code></div>
+          <div><span>Vetor</span><code>\vec{v}, \overrightarrow{AB}</code></div>
+          <div><span>Resposta final</span><code>&gt; **Resposta:** ...</code></div>
+          <div><span>Imagem</span><code>![esboço](figuras/fig_7_2_1.png)</code></div>
+        </div>
+
+        <div class="dica">
+          <strong>Imagens:</strong> salve em <code>gabaritos/Prova N/figuras/</code> e use o caminho relativo
+          <code>figuras/arquivo.png</code>. Prefira PNG com fundo branco — o site mostra imagens sobre um cartão claro.
+        </div>
+        <div class="dica aviso">
+          <strong>Corrigindo um gabarito antigo?</strong> Os gabaritos que já existem foram gerados sem
+          arquivo-fonte. Para corrigir um deles, reescreva-o em <code>fontes/</code> (pode copiar o texto do
+          site) e gere de novo — o <code>.js</code> antigo é substituído.
+        </div>
+      </section>
+
+      <!-- 5 -->
+      <section id="exercicio">
+        <h2><span class="num">5</span> Adicionar um exercício</h2>
+        <ol class="passos">
+          <li>
+            <strong>Coloque o PDF</strong> do enunciado em <code>exercicios/Prova N/&lt;item&gt;.pdf</code>.
+          </li>
+          <li>
+            <strong>Adicione o item na lista</strong>, no topo do <code>script.js</code>, com o mesmo texto do nome do arquivo:
+            <pre><code>const provas = {
+  2: [
+    "3.2.7", "3.2.9", <mark>"3.2.13"</mark>, ...</code></pre>
+          </li>
+          <li>
+            <strong>Gere as páginas</strong> que o visualizador mostra (converte o PDF em imagens nítidas e
+            preserva os marca-textos):
+            <pre><code>py -m pip install pymupdf      # só na primeira vez
+py ferramentas/gerar-paginas.py</code></pre>
+            <span class="nota">No macOS/Linux, use <code>python3</code> no lugar de <code>py</code>.</span>
+          </li>
+          <li><strong>Escreva o gabarito</strong> seguindo a <a href="#gabarito">seção anterior</a> (opcional, mas muito bem-vindo).</li>
+        </ol>
+      </section>
+
+      <!-- 6 -->
+      <section id="site">
+        <h2><span class="num">6</span> Melhorar o site</h2>
+        <p>O site é propositalmente simples. Algumas combinações para manter assim:</p>
+        <ul class="combinados">
+          <li><strong>Sem build e sem frameworks.</strong> HTML, CSS e JavaScript puros, que funcionam abrindo o arquivo direto (<code>file://</code>) e no GitHub Pages.</li>
+          <li><strong>Código em português</strong>, como o resto do projeto: <code>mostrarProva</code>, <code>.gabarito-area</code>.</li>
+          <li><strong>Cores só por variáveis</strong> (<code>--fundo</code>, <code>--texto</code>…) definidas no topo do <code>style.css</code>, para os temas claro e escuro funcionarem.</li>
+          <li><strong>Teste nos dois temas</strong> e com as seções redimensionadas antes de enviar.</li>
+          <li><strong>Mudanças pequenas e focadas</strong> são revisadas (e aceitas) muito mais rápido.</li>
+        </ul>
+      </section>
+
+      <!-- 7 -->
+      <section id="enviar">
+        <h2><span class="num">7</span> Enviar a contribuição</h2>
+        <ol class="passos">
+          <li>
+            <strong>Salve as mudanças</strong> com uma mensagem clara:
+            <pre><code>git add .
+git commit -m "Adiciona gabarito do 4.1.7"
+git push origin gabarito-4.1.7</code></pre>
+          </li>
+          <li>
+            <strong>Abra um <em>Pull Request</em></strong>: o GitHub mostra um botão
+            <kbd>Compare &amp; pull request</kbd> no seu fork. Descreva o que mudou.
+          </li>
+          <li>
+            <strong>Aguarde a revisão.</strong> Pode ser que peçam um ajuste — é normal e faz parte.
+            Assim que for aceito, a mudança vai ao ar sozinha no site em alguns minutos.
+          </li>
+        </ol>
+
+        <div class="checklist">
+          <p><strong>Antes de enviar, confira:</strong></p>
+          <label><input type="checkbox" class="check"> O nome do arquivo é igual ao texto do item na lista</label>
+          <label><input type="checkbox" class="check"> Rodei <code>npm run gabaritos</code> sem avisos</label>
+          <label><input type="checkbox" class="check"> Abri o site e o item aparece certinho</label>
+          <label><input type="checkbox" class="check"> Conferi as contas (de preferência, duas vezes 😉)</label>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section id="estrutura">
+        <h2><span class="num">8</span> Mapa das pastas</h2>
+<pre class="arvore"><code><b>DimasTracker/</b>
+├── index.html              <i>a página principal</i>
+├── script.js               <i>lista de itens e toda a lógica</i>
+├── style.css               <i>visual e temas (claro/escuro)</i>
+├── contribuir.html         <i>esta página</i>
+├── <b>exercicios/</b>Prova N/     <i>PDFs dos enunciados</i>
+├── <b>paginas/</b>                <i>páginas SVG geradas dos PDFs</i>  <span class="gerado">gerado</span>
+├── <b>fontes/</b>Prova N/         <i>gabaritos em Markdown</i>
+├── <b>gabaritos/</b>Prova N/      <i>gabaritos prontos para o site</i>  <span class="gerado">gerado</span>
+├── <b>ferramentas/</b>            <i>scripts de conversão</i>
+│   ├── gerar-gabaritos.mjs
+│   ├── gerar-paginas.py
+│   └── gerar-icone.py
+├── <b>icones/</b>                 <i>ícone do site</i>
+└── <b>vendor/</b>katex/           <i>fontes e estilo das fórmulas</i></code></pre>
+      </section>
+
+      <footer class="guia-rodape">
+        <p>
+          Ficou com dúvida? <a href="https://github.com/phbr13/DimasTracker/issues/new/choose" target="_blank" rel="noopener">Abra uma issue</a>
+          — não existe pergunta boba. Obrigado por ajudar! 💚
+        </p>
+        <a class="botao-link" href="./">← Voltar ao DimasTracker</a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="contribuir.js"></script>
+</body>
+</html>

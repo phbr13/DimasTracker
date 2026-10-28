@@ -1,0 +1,393 @@
+/* Página "Como contribuir?" — usa as variáveis de cor do style.css */
+
+html, body.pagina-guia {
+  height: auto;
+  overflow: auto;
+}
+
+body.pagina-guia {
+  display: block;
+  line-height: 1.65;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.pagina-guia { scroll-behavior: auto; }
+}
+
+.pagina-guia a { color: var(--destaque); text-underline-offset: 2px; }
+.pagina-guia a:hover { text-decoration-thickness: 2px; }
+
+.pagina-guia svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.pagina-guia svg.cheio { fill: currentColor; stroke: none; }
+
+/* ---------- Topo ---------- */
+.guia-topo {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 3.6rem;
+  padding: 0 2rem;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borda);
+}
+
+.guia-topo-direita { display: flex; align-items: center; gap: 0.75rem; }
+
+.pagina-guia .guia-voltar,
+.pagina-guia .guia-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  color: var(--texto-suave);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.pagina-guia .guia-voltar:hover,
+.pagina-guia .guia-github:hover { color: var(--texto); }
+.guia-voltar svg, .guia-github svg { width: 16px; height: 16px; }
+
+/* ---------- Layout: índice + conteúdo ---------- */
+.guia {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 46rem);
+  justify-content: center;
+  gap: 3.5rem;
+  padding: 2.5rem 2rem 4rem;
+}
+
+.guia-indice {
+  position: sticky;
+  top: 5.5rem;
+  align-self: start;
+  font-size: 0.86rem;
+}
+
+.guia-indice-titulo {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+  margin-bottom: 0.6rem;
+}
+
+.guia-indice ol { list-style: none; border-left: 1px solid var(--borda); }
+
+.pagina-guia .guia-indice a {
+  display: block;
+  padding: 0.3rem 0 0.3rem 0.9rem;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  color: var(--texto-suave);
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+.pagina-guia .guia-indice a:hover { color: var(--texto); }
+.pagina-guia .guia-indice a.atual { color: var(--texto); border-left-color: var(--destaque); }
+
+/* ---------- Capa ---------- */
+.guia-capa {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding-bottom: 2.2rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--borda);
+}
+
+.guia-capa img { flex: none; filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.25)); }
+
+.guia-sobretitulo {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--destaque);
+}
+
+.guia-capa h1 { font-size: 2.1rem; font-weight: 600; line-height: 1.2; margin: 0.15rem 0 0.6rem; }
+.guia-lead { color: var(--texto-suave); font-size: 1.02rem; }
+.guia-lead strong { color: var(--texto); }
+
+/* ---------- Seções ---------- */
+.guia-conteudo section { padding-top: 2.6rem; scroll-margin-top: 3.6rem; }
+
+.guia-conteudo h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--texto);
+  margin-bottom: 0.9rem;
+}
+
+.num {
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--destaque-fundo);
+  border: 1px solid var(--destaque);
+  color: var(--destaque);
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex: none;
+}
+
+.guia-conteudo p { margin-bottom: 0.9rem; }
+
+.pagina-guia code {
+  font-family: "Cascadia Code", Consolas, "SF Mono", Menlo, monospace;
+  font-size: 0.86em;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: var(--hover);
+}
+
+.pagina-guia kbd {
+  font: inherit;
+  font-size: 0.82em;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid var(--borda);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--superficie);
+}
+
+.pagina-guia pre {
+  position: relative;
+  margin: 0.6rem 0 0.4rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: var(--superficie);
+  overflow-x: auto;
+  line-height: 1.55;
+}
+
+.pagina-guia pre code { padding: 0; background: none; font-size: 0.84rem; white-space: pre; }
+.pagina-guia pre mark { background: var(--destaque-fundo); color: var(--destaque); border-radius: 3px; padding: 0 2px; }
+
+.botao-copiar {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.45rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  background: var(--fundo);
+  color: var(--texto-suave);
+  font: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+.pagina-guia pre:hover .botao-copiar,
+.botao-copiar:focus-visible { opacity: 1; }
+.botao-copiar:hover { color: var(--texto); }
+.botao-copiar.copiado { color: var(--destaque); border-color: var(--destaque); opacity: 1; }
+
+/* ---------- Cartões "jeitos de ajudar" ---------- */
+.cartoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.pagina-guia .cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.1rem 1.15rem;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  background: var(--superficie);
+  color: var(--texto);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.pagina-guia .cartao:hover { border-color: var(--destaque); transform: translateY(-2px); }
+.cartao > span:not(.cartao-icone) { color: var(--texto-suave); font-size: 0.88rem; line-height: 1.5; }
+
+.cartao-icone {
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-bottom: 0.35rem;
+  border-radius: 8px;
+  background: var(--destaque-fundo);
+  color: var(--destaque);
+}
+.cartao-icone svg { width: 20px; height: 20px; }
+
+.nivel {
+  align-self: flex-start;
+  margin-top: 0.45rem;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-style: normal;
+  border: 1px solid var(--borda);
+  color: var(--texto-suave);
+}
+.nivel.facil { color: var(--destaque); border-color: var(--destaque); }
+
+/* ---------- Passos numerados ---------- */
+.passos {
+  list-style: none;
+  counter-reset: passo;
+  margin: 1rem 0;
+}
+
+.passos > li {
+  counter-increment: passo;
+  position: relative;
+  padding: 0 0 1.1rem 2.6rem;
+}
+
+.passos > li::before {
+  content: counter(passo);
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--hover);
+  color: var(--texto);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* linha ligando os passos */
+.passos > li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0.8rem;
+  top: 2rem;
+  bottom: 0.25rem;
+  width: 1px;
+  background: var(--borda);
+}
+
+.nota { display: block; font-size: 0.82rem; color: var(--texto-suave); }
+
+.pagina-guia .botao-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.45rem 0 0 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--destaque);
+  border-radius: 8px;
+  color: var(--destaque);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.pagina-guia .botao-link:hover { background: var(--destaque-fundo); }
+
+/* ---------- Caixas de dica ---------- */
+.dica {
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--destaque);
+  border-radius: 0 8px 8px 0;
+  background: var(--destaque-fundo);
+  font-size: 0.92rem;
+}
+.dica.aviso { border-left-color: var(--texto-suave); background: var(--sutil); }
+
+.requisitos, .combinados { padding-left: 1.2rem; margin-bottom: 1rem; }
+.requisitos li, .combinados li { margin-bottom: 0.45rem; }
+.combinados li::marker, .requisitos li::marker { color: var(--destaque); }
+
+/* ---------- Tabela de referência rápida ---------- */
+.tabela-rapida {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 1.2rem 0;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--borda);
+}
+
+.tabela-rapida > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--superficie);
+}
+.tabela-rapida span { font-size: 0.78rem; color: var(--texto-suave); }
+.tabela-rapida code { align-self: flex-start; word-break: break-word; }
+
+/* ---------- Checklist ---------- */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 1rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  background: var(--superficie);
+}
+.checklist p { margin: 0 0 0.2rem; }
+.checklist label { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-size: 0.92rem; }
+.checklist label:has(:checked) { color: var(--texto-suave); text-decoration: line-through; }
+
+/* ---------- Árvore de pastas ---------- */
+.pagina-guia pre.arvore code { font-size: 0.8rem; }
+.arvore b { color: var(--texto); font-weight: 600; }
+.arvore i { color: var(--texto-suave); font-style: normal; }
+.gerado {
+  font-size: 0.7rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  border: 1px solid var(--borda);
+  color: var(--texto-suave);
+}
+
+/* ---------- Rodapé ---------- */
+.guia-rodape {
+  margin-top: 3rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--borda);
+  color: var(--texto-suave);
+}
+.guia-rodape .botao-link { margin-left: 0; }
+
+/* ---------- Telas estreitas ---------- */
+@media (max-width: 900px) {
+  .guia { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 1.5rem 1rem 3rem; }
+  .guia-indice { display: none; }
+  .guia-topo { padding: 0 1rem; }
+}
+
+@media (max-width: 560px) {
+  .cartoes, .tabela-rapida { grid-template-columns: minmax(0, 1fr); }
+  .guia-capa { flex-direction: column; align-items: flex-start; }
+  .guia-capa h1 { font-size: 1.7rem; }
+  .guia-github span { display: none; }
+}

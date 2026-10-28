@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DimasTracker</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="icones/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icones/icone-192.png">
+  <link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
+  <script>
+    // aplica o tema salvo antes de desenhar a página (evita piscar)
+    try {
+      if (localStorage.getItem("dimastracker:tema") === "claro") {
+        document.documentElement.dataset.tema = "claro";
+      }
+    } catch (e) { /* ignora */ }
+  </script>
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="cabecalho">
+    <div class="cabecalho-esquerda">
+      <h1 title="Dimas GOAT">DimasTracker</h1>
+
+      <fieldset class="provas">
+        <legend class="sr-only">Escolha a prova</legend>
+
+        <input type="radio" name="prova" id="prova-1" value="1" checked>
+        <label for="prova-1">Prova 1</label>
+
+        <input type="radio" name="prova" id="prova-2" value="2">
+        <label for="prova-2">Prova 2</label>
+
+        <input type="radio" name="prova" id="prova-3" value="3">
+        <label for="prova-3">Prova 3</label>
+      </fieldset>
+    </div>
+
+    <div class="progresso-area">
+      <div class="progresso" id="progresso-total" role="progressbar"
+           aria-label="Progresso total" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="anel">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <circle class="trilho" cx="24" cy="24" r="20" pathLength="100"></circle>
+            <circle class="barra" cx="24" cy="24" r="20" pathLength="100"></circle>
+          </svg>
+          <span class="pct">0%</span>
+        </div>
+        <div class="info">
+          <span class="rotulo">Total</span>
+          <span class="contagem">0 de 0</span>
+        </div>
+      </div>
+
+      <div class="progresso" id="progresso-prova" role="progressbar"
+           aria-label="Progresso da prova" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="anel">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <circle class="trilho" cx="24" cy="24" r="20" pathLength="100"></circle>
+            <circle class="barra" cx="24" cy="24" r="20" pathLength="100"></circle>
+          </svg>
+          <span class="pct">0%</span>
+        </div>
+        <div class="info">
+          <span class="rotulo">Prova 1</span>
+          <span class="contagem">0 de 0</span>
+        </div>
+      </div>
+
+      <a class="link-contribuir" href="contribuir.html">Como contribuir?</a>
+
+      <button type="button" class="botao-icone botao-tema" id="botao-tema" title="Mudar para o tema claro" aria-label="Mudar para o tema claro">
+        <svg class="icone-lua" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg>
+        <svg class="icone-sol" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.8"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="divisor divisor-horizontal" id="divisor-cabecalho" role="separator" aria-orientation="horizontal"
+       aria-label="Redimensionar cabeçalho" tabindex="0" title="Arraste para redimensionar (duplo clique restaura)"></div>
+
+  <main class="conteudo">
+    <section class="secao secao-1">
+      <h2 id="titulo-lista">Prova 1</h2>
+      <ul id="lista-itens" class="lista-itens"></ul>
+    </section>
+
+    <div class="divisor" id="divisor-1" role="separator" aria-orientation="vertical"
+         aria-label="Redimensionar lista" tabindex="0" title="Arraste para redimensionar (duplo clique restaura)"></div>
+
+    <section class="secao secao-2" id="secao-exercicio" aria-label="Exercício">
+      <div class="visor-topo">
+        <h2 id="titulo-exercicio">Exercício</h2>
+        <div class="visor-controles" id="visor-controles" hidden>
+          <span class="indicador-pagina" id="indicador-pagina" hidden></span>
+          <div class="grupo" role="group" aria-label="Zoom">
+            <button type="button" class="botao-icone" id="zoom-menos" title="Diminuir zoom (Ctrl −)" aria-label="Diminuir zoom">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg>
+            </button>
+            <button type="button" class="botao-icone zoom-valor" id="zoom-valor" title="Voltar para 100% (Ctrl 0)">100%</button>
+            <button type="button" class="botao-icone" id="zoom-mais" title="Aumentar zoom (Ctrl +)" aria-label="Aumentar zoom">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg>
+            </button>
+          </div>
+          <div class="grupo" role="group" aria-label="Ajuste">
+            <button type="button" class="botao-icone" id="ajustar-largura" title="Ajustar à largura" aria-label="Ajustar à largura">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M4.5 5.5 2 8l2.5 2.5M11.5 5.5 14 8l-2.5 2.5"/></svg>
+            </button>
+            <button type="button" class="botao-icone" id="ajustar-pagina" title="Página inteira" aria-label="Página inteira">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="4" y="2" width="8" height="12" rx="1"/><path d="M6 5.5h4M6 8h4M6 10.5h2.5"/></svg>
+            </button>
+          </div>
+          <div class="grupo" role="group" aria-label="Exibição">
+            <button type="button" class="botao-icone" id="paginas-escuras" aria-pressed="false" title="Páginas escuras" aria-label="Páginas escuras">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/></svg>
+            </button>
+            <button type="button" class="botao-icone" id="tela-cheia" title="Tela cheia (F)" aria-label="Tela cheia">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg>
+            </button>
+            <a id="abrir-pdf" class="botao-icone" target="_blank" rel="noopener" title="Abrir o PDF original em outra aba" aria-label="Abrir PDF original">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9 2.5h4.5V7M13.5 2.5 7.5 8.5M11.5 9.5v3a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div id="visor-area" class="visor-area" tabindex="-1">
+        <p class="painel-vazio">Selecione um item da lista para ver o exercício.</p>
+      </div>
+    </section>
+
+    <div class="divisor" id="divisor-2" role="separator" aria-orientation="vertical"
+         aria-label="Redimensionar exercício e gabarito" tabindex="0" title="Arraste para redimensionar (duplo clique restaura)"></div>
+
+    <section class="secao secao-3" aria-label="Gabarito">
+      <div class="gabarito-topo">
+        <h2 id="titulo-gabarito">Gabarito</h2>
+        <label class="modo-estudo" title="Esconde o gabarito até você clicar em Mostrar">
+          <input type="checkbox" id="modo-estudo" class="check">
+          <span>Esconder até eu pedir</span>
+        </label>
+      </div>
+      <div id="gabarito-area" class="gabarito-area">
+        <p class="painel-vazio">Selecione um item da lista para ver o gabarito.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="paginas/indice.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
